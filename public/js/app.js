@@ -1641,13 +1641,14 @@ spotify.fetch = function () {
         if (response.data.success) {
             var payload = response.data.payload;
 
-            $loader.style.opacity = 0;
-
             if (payload === "") {
-                console.log('not playing shit atm.');
+                $loader.style.opacity = 1;
+
+                $loader.textContent = "No song is currently playing";
             } else {
+                $loader.style.opacity = 0;
+
                 payload = JSON.parse(payload);
-                console.log(payload);
 
                 if (payload.redirect) {
                     window.location.replace(payload.redirect);
@@ -1686,7 +1687,9 @@ spotify.fetch = function () {
             }
         }
     }).catch(function (error) {
-        console.log(error);
+        alert("Whoops, something went wrong...");
+
+        window.location.href = "/";
     });
 };
 
