@@ -1,0 +1,142 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,400,600');
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+// Variables
+@import "variables";
+
+// Components
+@import "components/button";
+@import "components/play";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 40px;
+  font-weight: 100;
+  color: $text-color;
+  box-sizing: border-box;
+  font-family: $font-family-sans-serif;
+  background: rgba(0,0,0,0.3);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#progress {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 10px;
+
+  #line {
+    height: 100%;
+    background-color: #00C21F;
+    display: block;
+    transition: width 1s linear;
+  }
+}
+
+.track-info {
+  margin-left: 150px;
+  width: 50vw;
+
+  #track {
+    font-weight: 600;
+    letter-spacing: -2px;
+    padding: 5px 0;
+
+    &:after {
+      content: "by";
+      display: block;
+      font-size: 30px;
+      font-weight: 200;
+      font-style: italic;
+      padding: 15px 0;
+    }
+  }
+
+  #artist {
+    font-weight: 400;
+    padding: 5px 0 10px;
+  }
+
+  #album {
+    font-weight: 200;
+    letter-spacing: -2px;
+  }
+}
+
+#loader {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
+  color: #333;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s;
+  opacity: 1;
+
+  .fa {
+    margin-right: 10px;
+  }
+}
+
+#playtime {
+  position: absolute;
+  bottom: 20px;
+
+  span {
+    margin: 0 10px;
+    font-weight: 200;
+  }
+}
+
+#art-wrapper {
+  max-width: 500px;
+
+  img {
+    width: 100%;
+  }
+}
+
+#art-bg-wrapper {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  -o-filter: blur(15px);
+  -ms-filter: blur(15px);
+  filter: blur(15px);
+
+  img {
+    width: 100%;
+    min-height: 100%;
+  }
+}
