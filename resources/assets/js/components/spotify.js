@@ -90,9 +90,9 @@ function calculateProgress(current, total) {
 function msToTime(time) {
     var ms = time % 1000;
     time = (time - ms) / 1000;
-    var secs = time % 60;
+    var secs = Math.floor(time % 60);
     time = (time - secs) / 60;
-    var mins = time % 60;
+    var mins = Math.floor(time % 60);
 
     return mins + ':' + (secs < 10 ? "0" + secs : secs);
 }
