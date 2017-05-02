@@ -1623,6 +1623,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 spotify = {};
 
+var fetchDelay = 1000;
 var $loader = document.getElementById('loader');
 var $image = document.getElementById('art');
 var $imageBlur = document.getElementById('art-bg');
@@ -1638,8 +1639,15 @@ var $totalPlaytime = document.getElementById('total-playtime');
 
 spotify.fetch = function () {
     axios.get('/fetch').then(function (response) {
+        var payload;
+
+        if (response.data.refresh) {
+            window.location.reload();
+        }
+
         if (response.data.success) {
-            var payload = response.data.payload;
+            fetchDelay = 1000;
+            payload = response.data.payload;
 
             if (payload === "") {
                 $loader.style.opacity = 1;
@@ -1685,17 +1693,29 @@ spotify.fetch = function () {
                 $currentPlaytime.textContent = msToTime(payload.progress_ms);
                 $totalPlaytime.textContent = msToTime(payload.item.duration_ms);
             }
+        } else {
+            payload = response.data.payload;
+
+            if (payload !== "") {
+                payload = JSON.parse(payload);
+
+                console.log(payload.message);
+            }
         }
     }).catch(function (error) {
-        alert("Whoops, something went wrong...");
+        if (fetchDelay < 10000) {
+            fetchDelay = fetchDelay + 1000;
 
-        window.location.href = "/";
+            console.log("Increasing fetch delay to: " + fetchDelay);
+        }
+
+        console.log(error);
     });
 };
 
 setInterval(function () {
     spotify.fetch();
-}, 1000);
+}, fetchDelay);
 spotify.fetch();
 
 /**
