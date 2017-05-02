@@ -22,7 +22,7 @@ class SpotifyAccessToken
     public function handle($request, Closure $next)
     {
         if (session()->has('access_token') && session()->has('access_token_timeout') && session()->has('refresh_token')) {
-            if (session('access_token_timeout') > time()) {
+            if (session('access_token_timeout') > (time() - 60)) {
                 return $next($request);
             } else {
                 if (session('refresh_token') !== "") {
@@ -48,8 +48,10 @@ class SpotifyAccessToken
 
             if ($request->ajax()) {
                 return response([
-                    'redirect' => url('/')
-                ]);
+                    'code' => 400,
+                    'refresh' => true,
+                    'payload' => "Session expired or not created."
+                ], 400);
             }
 
             return redirect()->away(
