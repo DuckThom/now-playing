@@ -11,7 +11,7 @@ return [
     /**
      * A redirect URI defined in the Spotify app settings
      */
-    'redirect_uri' => "http://playing.local/callback",
+    'redirect_uri' => env('SPOTIFY_CALLBACK_URL'),
 
     /**
      * Scopes that are required for the app to work
