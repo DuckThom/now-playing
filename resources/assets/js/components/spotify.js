@@ -113,6 +113,8 @@ function msToTime(time) {
     var secs = Math.floor(time % 60);
     time = (time - secs) / 60;
     var mins = Math.floor(time % 60);
+    time = (time - mins) / 60;
+    var hours = Math.floor(time % 24);
 
-    return mins + ':' + (secs < 10 ? "0" + secs : secs);
+    return (hours > 0 ? hours + ':' : '') + (mins < 10 ? "0" + mins : mins) + ':' + (secs < 10 ? "0" + secs : secs);
 }
