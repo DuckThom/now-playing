@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function handle()
     {
         if (session()->has('access_token')) {
-            return redirect(route('playing'));
+            return redirect()->route('playing');
         }
 
         $auth_url = app('spotify')->getAuthorizeUrl([

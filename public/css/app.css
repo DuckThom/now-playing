@@ -1,0 +1,276 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,200,400,600);.btn {
+  padding: 15px 50px;
+  border-radius: 40px;
+  text-decoration: none;
+}
+
+.btn.btn-auth {
+  background-color: white;
+  color: #333;
+}
+
+.btn.btn-auth:hover {
+  background-color: #efefef;
+}
+
+#play {
+  position: absolute;
+  top: 50px;
+}
+
+#play-icon,
+#pause-icon {
+  position: absolute;
+  top: 50px;
+  left: 26px;
+}
+
+.sp {
+  width: 100px;
+  height: 100px;
+  clear: both;
+  margin: 20px auto;
+  display: inline-block;
+  top: 0;
+  right: 0;
+  position: absolute;
+}
+
+.sp-wave {
+  border-radius: 50%;
+  position: relative;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.sp-wave:before,
+.sp-wave:after {
+  content: '';
+  border: 1px #fff solid;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+}
+
+.sp-wave:before {
+  -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+  opacity: 1;
+  -webkit-animation: spWaveBe 0.6s infinite linear;
+  animation: spWaveBe 0.6s infinite linear;
+}
+
+.sp-wave:after {
+  -webkit-transform: scale(0, 0);
+          transform: scale(0, 0);
+  opacity: 0;
+  -webkit-animation: spWaveAf 0.6s infinite linear;
+  animation: spWaveAf 0.6s infinite linear;
+}
+
+@-webkit-keyframes spWaveAf {
+  from {
+    -webkit-transform: scale(0.5, 0.5);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes spWaveAf {
+  from {
+    -webkit-transform: scale(0.5, 0.5);
+            transform: scale(0.5, 0.5);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes spWaveBe {
+  from {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes spWaveBe {
+  from {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 40px;
+  font-weight: 100;
+  color: #efefef;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+#app {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#progress {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 10px;
+}
+
+#progress #line {
+  height: 100%;
+  background-color: #00C21F;
+  display: block;
+  -webkit-transition: width 1s linear;
+  transition: width 1s linear;
+}
+
+.track-info {
+  margin-left: 150px;
+  width: 50vw;
+}
+
+.track-info #track {
+  font-weight: 600;
+  letter-spacing: -2px;
+  padding: 5px 0;
+}
+
+.track-info #track:after {
+  content: "by";
+  display: block;
+  font-size: 30px;
+  font-weight: 200;
+  font-style: italic;
+  padding: 15px 0;
+}
+
+.track-info #artist {
+  font-weight: 400;
+  padding: 5px 0 10px;
+}
+
+.track-info #album {
+  font-weight: 200;
+  letter-spacing: -2px;
+}
+
+#loader {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
+  color: #333;
+  font-size: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+#loader .fa {
+  margin-right: 10px;
+}
+
+#playtime {
+  position: absolute;
+  bottom: 20px;
+}
+
+#playtime span {
+  margin: 0 10px;
+  font-weight: 200;
+}
+
+#art-wrapper {
+  max-width: 500px;
+}
+
+#art-wrapper img {
+  width: 100%;
+}
+
+#art-bg-wrapper {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  -o-filter: blur(15px);
+  -ms-filter: blur(15px);
+  filter: blur(15px);
+}
+
+#art-bg-wrapper img {
+  width: 100%;
+  min-height: 100%;
+}
+

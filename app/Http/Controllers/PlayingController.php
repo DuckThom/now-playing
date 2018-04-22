@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use App\Services\SpotifyService;
 use GuzzleHttp\Exception\BadResponseException;
 
 /**
@@ -12,6 +13,21 @@ use GuzzleHttp\Exception\BadResponseException;
  */
 class PlayingController extends Controller
 {
+    /**
+     * @var SpotifyService
+     */
+    protected $service;
+
+    /**
+     * CallbackController constructor.
+     *
+     * @param  SpotifyService  $service
+     */
+    public function __construct(SpotifyService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Playing page
      *
@@ -29,34 +45,9 @@ class PlayingController extends Controller
      */
     public function fetch()
     {
-        if (!session()->has('access_token') || !request()->ajax()) {
-            return redirect('/');
-        }
-
-        $client = new Client;
-        try {
-            $response = $client->get("https://api.spotify.com/v1/me/player/currently-playing", [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . session('access_token')
-                ]
-            ]);
-
-            $refresh = false;
-            $code = $response->getStatusCode();
-            $payload = $response->getBody()->getContents();
-        } catch (BadResponseException $e) {
-            $refresh = false;
-            $code = $e->getResponse()->getStatusCode();
-            $payload = [
-                "message" => "Loading from Spotify API failed.",
-            ];
-        }
-
-        return response([
-            'code' => $code,
-            'success' => $code >= 200 && $code < 300,
-            'refresh' => $refresh,
-            'payload' => $payload
+        return response()->json([
+            'song' => $this->service->currentSong(),
+            'code' => 200
         ]);
     }
 }
