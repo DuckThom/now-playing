@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SpotifyService;
+
 /**
  * Home controller
  *
@@ -10,20 +12,29 @@ namespace App\Http\Controllers;
 class HomeController extends Controller
 {
     /**
+     * @var SpotifyService
+     */
+    protected $service;
+
+    /**
+     * CallbackController constructor.
+     *
+     * @param  SpotifyService  $service
+     */
+    public function __construct(SpotifyService $service)
+    {
+        $this->service = $service;
+    }
+
+    /**
      * Main page handler.
      *
      * @return \Illuminate\View\View
      */
     public function handle()
     {
-        if (session()->has('access_token')) {
-            return redirect()->route('playing');
-        }
+        $auth_url = $this->service->getAuthUrl();
 
-        $auth_url = app('spotify')->getAuthorizeUrl([
-            'scope' => config('spotify.scopes')
-        ]);
-
-        return view('welcome', compact('auth_url'));
+        return view('app', compact('auth_url'));
     }
 }

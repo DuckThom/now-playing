@@ -13,22 +13,21 @@
           integrity="sha384-KwxQKNj2D0XKEW5O/Y6haRH39PE/xry8SAoLbpbCMraqlX7kUP6KHOnrlrtvuJLR" crossorigin="anonymous">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
 
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script>
         window.Laravel = {
-            access_token: '{{ session('access_token') }}',
-            expires_at: '{{ session('expires_at') * 1000 }}'
+            access_token: '{{ session('access_token') }}'
         };
     </script>
 </head>
 <body>
-
     <div id="app">
         <div v-if="window.Laravel.access_token">
-            Authed
+            <player></player>
         </div>
 
         <div v-else>
-            Login with Spotify
+            <a href="{{ $auth_url }}">Login with Spotify</a>
         </div>
     </div>
 

@@ -12,11 +12,6 @@
 */
 
 Route::get('/', 'HomeController@handle');
-
-Route::group([
-//    'middleware' => 'spotify'
-], function () {
-    Route::get('callback', 'CallbackController@handle');
-    Route::get('playing', 'PlayingController@handle')->name('playing');
-    Route::get('playing/fetch', 'PlayingController@fetch');
-});
+Route::get('callback', 'CallbackController@handle')->name('callback');
+//Route::get('playing', 'PlayingController@handle')->name('playing');
+//Route::get('playing/fetch', 'PlayingController@fetch');

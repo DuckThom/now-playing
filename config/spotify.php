@@ -17,6 +17,10 @@ return [
      * Scopes that are required for the app to work
      */
     'scopes' => [
-        'user-read-playback-state'
+        'user-read-playback-state',
+        'streaming',
+        'user-read-birthdate',
+        'user-read-email',
+        'user-read-private'
     ]
 ];

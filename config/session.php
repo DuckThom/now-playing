@@ -29,7 +29,8 @@ return [
     |
     */
 
-    'lifetime' => 1440,
+    // 1 Year
+    'lifetime' => 31556926,
 
     'expire_on_close' => false,
 
@@ -44,7 +45,7 @@ return [
     |
     */
 
-    'encrypt' => false,
+    'encrypt' => true,
 
     /*
     |--------------------------------------------------------------------------

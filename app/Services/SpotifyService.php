@@ -4,17 +4,15 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use App\Objects\Spotify\Auth;
-use App\Objects\Spotify\Song;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Auth\AuthenticationException;
 
 class SpotifyService
 {
     const URL_SPOTIFY_AUTH = 'https://accounts.spotify.com';
-    const URL_SPOTIFY_API = 'https://api.spotify.com/v1';
 
+    const ENDPOINT_SPOTIFY_AUTH = '/authorize';
     const ENDPOINT_SPOTIFY_TOKEN = '/api/token';
-    const ENDPOINT_SPOTIFY_CURRENTLY_PLAYING = '/me/player/currently-playing';
 
     const GRANT_TYPE_AUTH = 'authorization_code';
     const GRANT_TYPE_REFRESH = 'refresh_token';
@@ -32,6 +30,24 @@ class SpotifyService
     public function __construct(Client $client)
     {
         $this->client = new Client;
+    }
+
+    /**
+     * Get the url for authentication.
+     *
+     * @return string
+     */
+    public function getAuthUrl(): string
+    {
+        return static::URL_SPOTIFY_AUTH .
+            static::ENDPOINT_SPOTIFY_AUTH .
+            '?' .
+            http_build_query([
+                'scope' => join(',', config('spotify.scopes')),
+                'client_id' => config('spotify.client_id'),
+                'redirect_uri' => config('spotify.redirect_uri'),
+                'response_type' => 'code'
+            ]);
     }
 
     /**
@@ -63,20 +79,6 @@ class SpotifyService
     }
 
     /**
-     * Fetch the currently playing song.
-     *
-     * @return null|Song
-     */
-    public function currentSong(): ?Song
-    {
-        $response = $this->request(static::ENDPOINT_SPOTIFY_CURRENTLY_PLAYING);
-
-        return $this->createSpotifySong(
-            json_decode((string) $response->getBody(), true)
-        );
-    }
-
-    /**
      * Create a Spotify auth object.
      *
      * @param  array  $data
@@ -88,21 +90,6 @@ class SpotifyService
             $data['access_token'],
             $data['refresh_token'] ?? session('refresh_token'),
             $data['expires_in']
-        );
-    }
-
-    /**
-     * Create a Spotify song object.
-     *
-     * @param array $data
-     * @return Song
-     */
-    protected function createSpotifySong(array $data): Song
-    {
-        return new Song(
-            $data['is_playing'],
-            $data['progress_ms'],
-            $data['item']
         );
     }
 
@@ -125,7 +112,7 @@ class SpotifyService
                 $key = 'code';
         }
 
-        $response = $this->request(static::URL_SPOTIFY_AUTH . static::ENDPOINT_SPOTIFY_TOKEN, 'post', [
+        $response = $this->request(static::ENDPOINT_SPOTIFY_TOKEN, 'post', [
             'grant_type' => $grantType,
             'redirect_uri' => config('spotify.redirect_uri'),
             $key => $token,
@@ -153,9 +140,8 @@ class SpotifyService
      */
     protected function request(string $endpoint, string $type = 'get', $data = [], array $headers = []): ResponseInterface
     {
-        // Assume the API url if no FQDN is given
         if (strpos($endpoint, 'http') === false) {
-            $endpoint = static::URL_SPOTIFY_API . $endpoint;
+            $endpoint = static::URL_SPOTIFY_AUTH . $endpoint;
         }
 
         if (empty($headers)) {
