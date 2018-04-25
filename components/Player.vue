@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="player" v-if="$root.initialized">
+        <div id="player" v-if="initialized">
             <controls :playing="playing"></controls>
 
             <album-art :image="imageSrc"></album-art>
@@ -12,24 +12,24 @@
             <progress-bar :position="time" :duration="duration"></progress-bar>
         </div>
 
-        <div v-if="$root.initialized && showOverlay" class="overlay">
+        <div v-if="initialized && showOverlay" class="overlay">
             Select "Dashboard player" in the "Connect to a device" menu in Spotify
         </div>
 
-        <div v-if="!$root.initialized" class="overlay">
+        <div v-if="!initialized" class="overlay">
             <i class="fal fa-spin fa-spinner"></i> Loading...
         </div>
     </div>
 </template>
 
 <script>
-    import ProgressBar from './ProgressBar'
-import TrackInfo from './TrackInfo'
-import Controls from './Controls'
-import Playtime from './Playtime'
-import AlbumArt from './AlbumArt'
+    import ProgressBar from './Player/ProgressBar'
+    import TrackInfo from './Player/TrackInfo'
+    import Controls from './Player/Controls'
+    import Playtime from './Player/Playtime'
+    import AlbumArt from './Player/AlbumArt'
 
-export default {
+    export default {
       components: {
         AlbumArt,
         ProgressBar,
@@ -39,6 +39,7 @@ export default {
       },
       data () {
         return {
+          initialized: false,
           showOverlay: true,
           playing: false,
           time: 0,
@@ -49,7 +50,11 @@ export default {
           imageSrc: ''
         }
       },
-      created () {
+      beforeMount () {
+        this.$root.$on('init', () => {
+          this.$data.initialized = true
+        })
+
         setInterval(() => {
           if (!this.$data.playing) {
             return
@@ -78,23 +83,23 @@ export default {
           this.$data.duration = state.duration
           this.$data.playing = !state.paused
 
-          const current_track = state.track_window.current_track
+          const currentTrack = state.track_window.current_track
 
           // Song
-          this.$data.song = current_track.name
-          this.$data.album = current_track.album.name
+          this.$data.song = currentTrack.name
+          this.$data.album = currentTrack.album.name
 
           let names = []
-          current_track.artists.forEach(artist => names.push(artist.name))
+          currentTrack.artists.forEach(artist => names.push(artist.name))
 
           this.$data.artists = names.join(', ')
 
-          const image = current_track.album.images.reduce((l, e) => e.height > l.height ? e : l)
+          const image = currentTrack.album.images.reduce((l, e) => e.height > l.height ? e : l)
 
           // Image
           this.$data.imageSrc = image.url
         })
-  }
+      }
     }
 </script>
 

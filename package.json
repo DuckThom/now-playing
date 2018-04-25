@@ -1,22 +1,37 @@
 {
+  "name": "now-playing",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "Thomas Wiringa <thomas.wiringa@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch-poll": "npm run watch -- --watch-poll",
-    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "dev": "backpack dev",
+    "build": "nuxt build && backpack build",
+    "start": "cross-env NODE_ENV=production node build/main.js",
+    "precommit": "npm run lint",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "cross-env": "^5.0.1",
+    "express": "^4.15.3",
+    "node-sass": "^4.8.3",
+    "nuxt": "^1.0.0-rc3",
+    "qs": "^6.5.1",
+    "sass-loader": "^7.0.1",
+    "source-map-support": "^0.4.15",
+    "vue-localstorage": "^0.6.2"
   },
   "devDependencies": {
-    "axios": "^0.18",
-    "bootstrap": "^4.0.0",
-    "popper.js": "^1.12",
-    "cross-env": "^5.1",
-    "jquery": "^3.2",
-    "laravel-mix": "^2.0",
-    "lodash": "^4.17.4",
-    "vue": "^2.5.7"
+    "babel-eslint": "^7.2.3",
+    "backpack-core": "^0.4.1",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.1.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
