@@ -1,14 +1,17 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
-/.idea
-/.vscode
-/.vagrant
-Homestead.json
-Homestead.yaml
+# dependencies
+node_modules
+
+# logs
 npm-debug.log
-yarn-error.log
-.env
-composer.phar
+
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+# Backpack build
+build
+
+# temp storage
+resources

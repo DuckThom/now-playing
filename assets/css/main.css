@@ -1,0 +1,19 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 40px;
+  font-weight: 100;
+  color: #efefef;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  background: rgba(0,0,0,0.3);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
