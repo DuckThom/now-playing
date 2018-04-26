@@ -6,6 +6,8 @@
 
 <script>
 import axios from '~/plugins/axios'
+import moment from 'moment'
+import qs from 'qs'
 import Player from '~/components/Player'
 
 export default {
@@ -22,23 +24,8 @@ export default {
   mounted () {
     this.$root.$data.player = null
 
-    if (
-      this.$route.query.access_token &&
-      this.$route.query.refresh_token
-    ) {
-      let date = new Date()
-      date.setHours(date.getHours() + 1)
-
-      this.$localStorage.set('expire_time', date)
-      this.$localStorage.set('access_token', this.$route.query.access_token)
-      this.$localStorage.set('refresh_token', this.$route.query.refresh_token)
-
-      // Remove the query params from the url
-      window.location.href = window.location.pathname
-    }
-
     let accessToken = this.$localStorage.get('access_token')
-    let refreshToken = this.$localStorage.get('access_token')
+    let refreshToken = this.$localStorage.get('refresh_token')
     let expireTime = this.$localStorage.get('expire_time')
 
     if (!accessToken) {
@@ -50,11 +37,26 @@ export default {
       const player = new Spotify.Player({
         name: 'Dashboard player',
         getOAuthToken: cb => {
-          if (expireTime < new Date()) {
-            axios.post('/api/token', {
-              accessToken: accessToken,
-              refreshToken: refreshToken
-            }).then(response => cb(response.data.token))
+          if (moment(expireTime).isBefore()) {
+            axios.post('/api/refresh?' + qs.stringify({
+              refresh_token: refreshToken
+            }))
+              .then(response => {
+                if (response.data.error) {
+                  alert('Authentication error: ' + response.data.error_description)
+
+                  this.$localStorage.remove('expire_time')
+                  this.$localStorage.remove('access_token')
+                  this.$localStorage.remove('refresh_token')
+
+                  window.location.replace('/')
+                }
+
+                this.$localStorage.set('expire_time', response.data.expire_time)
+                this.$localStorage.set('access_token', response.data.access_token)
+
+                cb(response.data.access_token)
+              })
           } else {
             cb(accessToken)
           }

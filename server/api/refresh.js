@@ -12,24 +12,20 @@ const headers = {
 };
 
 /* GET users listing. */
-router.post('/token', async function (req, res) {
+router.post('/refresh', async function (req, res) {
   try {
     const data = qs.stringify({
-      grant_type: 'authorization_code',
-      code: req.query.code,
-      redirect_uri: process.env.REDIRECT_URI
+      grant_type: 'refresh_token',
+      refresh_token: req.query.refresh_token
     })
 
     const response = await axios.post('https://accounts.spotify.com/api/token', data, {
       headers: headers
     })
 
-    console.log(response)
-
     res.json({
       access_token: response.data.access_token,
       expire_time: moment().add(response.data.expires_in, 'seconds').format(),
-      refresh_token: response.data.refresh_token
     })
   } catch (e) {
     res.json(e.response.data)

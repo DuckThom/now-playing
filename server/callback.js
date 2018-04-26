@@ -15,7 +15,7 @@ router.get('/', async function (req, res, next) {
   try {
     const data = qs.stringify({
       grant_type: 'authorization_code',
-      code: req.query.code,
+      code: req.params.code,
       redirect_uri: process.env.REDIRECT_URI
     })
 

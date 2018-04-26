@@ -2,7 +2,6 @@ import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 
 import api from './api'
-import callback from './callback'
 
 const app = express()
 const host = process.env.HOST || '127.0.0.1'
@@ -12,7 +11,6 @@ app.set('port', port)
 
 // Import API Routes
 app.use('/api', api)
-app.use('/callback', callback)
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
