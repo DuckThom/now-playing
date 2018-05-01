@@ -28,8 +28,12 @@ export default {
     let refreshToken = this.$localStorage.get('refresh_token')
     let expireTime = this.$localStorage.get('expire_time')
 
-    if (!accessToken) {
-      window.location.href = '/'
+    if (!accessToken || accessToken === 'undefined' || refreshToken === 'undefined') {
+      this.$localStorage.remove('expire_time')
+      this.$localStorage.remove('access_token')
+      this.$localStorage.remove('refresh_token')
+
+      window.location.replace('/')
     }
 
     window.onSpotifyWebPlaybackSDKReady = () => {

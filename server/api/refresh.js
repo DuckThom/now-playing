@@ -3,6 +3,9 @@ import { Buffer } from 'buffer'
 import axios from 'axios/index'
 import qs from 'qs'
 import moment from 'moment'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const router = Router()
 const auth = Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64')
