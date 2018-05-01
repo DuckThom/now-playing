@@ -78,7 +78,7 @@ export default {
       // Ready
       // eslint-disable-next-line
       player.addListener('ready', ({ device_id }) => {
-        this.$root.$emit('init')
+        this.$root.$emit('init', device_id)
 
         console.log('Ready with Device ID', device_id)
       })

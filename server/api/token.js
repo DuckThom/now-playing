@@ -24,8 +24,6 @@ router.post('/token', async function (req, res) {
       headers: headers
     })
 
-    console.log(response)
-
     res.json({
       access_token: response.data.access_token,
       expire_time: moment().add(response.data.expires_in, 'seconds').format(),
