@@ -12,7 +12,7 @@ const auth = Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
 const headers = {
   'Authorization': 'Basic ' + auth,
   'Content-Type': 'application/x-www-form-urlencoded'
-};
+}
 
 /* GET users listing. */
 router.post('/refresh', async function (req, res) {
@@ -28,7 +28,7 @@ router.post('/refresh', async function (req, res) {
 
     res.json({
       access_token: response.data.access_token,
-      expire_time: moment().add(response.data.expires_in, 'seconds').format(),
+      expire_time: moment().add(response.data.expires_in, 'seconds').format()
     })
   } catch (e) {
     res.json(e.response.data)

@@ -8,7 +8,7 @@ const foo = Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET)
 const headers = {
   'Authorization': 'Basic ' + foo,
   'Content-Type': 'application/x-www-form-urlencoded'
-};
+}
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {

@@ -3,11 +3,16 @@ html, body {
   padding: 0;
   height: 100%;
   font-size: 40px;
-  font-weight: 100;
+  font-weight: 200;
   color: #efefef;
   box-sizing: border-box;
-  font-family: "Raleway", sans-serif;
+  font-family: "Gothic A1", sans-serif;
   background: rgba(0,0,0,0.3);
+}
+
+button {
+  font-weight: 200;
+  font-family: "Gothic A1", sans-serif;
 }
 
 *, *:before, *:after {

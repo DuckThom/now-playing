@@ -1,11 +1,13 @@
 <template>
     <div>
         <div id="player" v-if="initialized">
-            <controls :playing="playing"></controls>
+            <search></search>
 
             <album-art :image="imageSrc"></album-art>
 
             <track-info :song="song" :artists="artists" :album="album"></track-info>
+
+            <controls :playing="playing"></controls>
 
             <playtime :time="time" :duration="duration"></playtime>
 
@@ -13,11 +15,11 @@
         </div>
 
         <div v-if="initialized && showOverlay" class="overlay">
-            <span>Select "Dashboard player" in the "Connect to a device" menu in Spotify</span>
+            <span>Select "Dashboard player" from your devices in Spotify</span>
 
-            <span>or</span>
+            <span style="margin: 30px 0;">or</span>
 
-            <button class="btn btn-green" v-on:click="makePlayer()">Play here</button>
+            <button v-on:click="makePlayer()">Play here</button>
         </div>
 
         <div v-if="!initialized" class="overlay">
@@ -33,6 +35,7 @@
   import Controls from './Player/Controls'
   import Playtime from './Player/Playtime'
   import AlbumArt from './Player/AlbumArt'
+  import Search from './Player/Search'
 
   export default {
     components: {
@@ -40,7 +43,8 @@
       ProgressBar,
       TrackInfo,
       Controls,
-      Playtime
+      Playtime,
+      Search
     },
     data () {
       return {
@@ -135,7 +139,7 @@
 
     .overlay {
         background-color: white;
-        font-size: 50px;
+        font-size: 45px;
         z-index: 1000;
         display: flex;
         color: #333;
@@ -151,23 +155,21 @@
         top: 0;
     }
 
-    .btn {
+    button {
         display: block;
         padding: 15px 50px;
-        border-radius: 40px;
-        text-decoration: none;
         border: 0;
-        font-size: 50px;
-        font-family: "Raleway", sans-serif;
+        font-size: 45px;
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        background-color: #6AE368;
+        color: #333;
+        transition: all 250ms;
 
-        &.btn-green {
-            background-color: #6AE368;
-            color: #333;
-
-            &:hover {
-                background-color: #efefef;
-                cursor: pointer;
-            }
+        &:hover {
+            background-color: #efefef;
+            cursor: pointer;
         }
     }
 </style>

@@ -12,7 +12,7 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', crossorigin: 'anonymous', href: 'https://pro.fontawesome.com/releases/v5.0.10/css/all.css', integrity: 'sha384-KwxQKNj2D0XKEW5O/Y6haRH39PE/xry8SAoLbpbCMraqlX7kUP6KHOnrlrtvuJLR' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Raleway:100,200,400,600' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Gothic+A1:100,200,400,600' }
     ]
   },
   /*

@@ -12,7 +12,7 @@ const auth = Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
 const headers = {
   'Authorization': 'Basic ' + auth,
   'Content-Type': 'application/x-www-form-urlencoded'
-};
+}
 
 /* GET users listing. */
 router.post('/token', async function (req, res) {
